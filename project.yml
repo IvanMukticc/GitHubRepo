@@ -1,0 +1,50 @@
+name: GitHubRepo
+options:
+    createIntermediateGroups: true
+    deploymentTarget:
+        iOS: 15.0
+        
+#packages: []
+# add template attributes for code signing
+targets:
+    GitHubRepo:
+        templateAttributes:
+            enviroment: Production
+            iconName: AppIcon
+            bundleIdentifier: hr.propeller.githubrepo
+        templates:
+            - MainTemplate
+
+targetTemplates:
+    MainTemplate:
+        platform: iOS
+        type: application
+        sources:
+            - Sources
+            - Resources
+            - Config/${enviroment}
+        scheme: {}
+        dependencies: []
+        info:
+            path: Config/${enviroment}/Info.plist
+            properties:
+                UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+                UILaunchScreen:
+                    UIImageName:
+                ITSAppUsesNonExemptEncryption: NO
+                UIRequiresFullScreen: YES
+                CFBundleShortVersionString: 1.0.0
+        settings:
+            base:
+                PRODUCT_BUNDLE_IDENTIFIER: ${bundleIdentifier}
+                DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+                CODE_SIGN_STYLE: Manual
+                CODE_SIGN_IDENTITY: iPhone Distribution
+                SWIFT_VERSION: 5.5
+        preBuildScripts:
+          - name: SwiftFormat
+            script: |
+              cd BuildTools
+              SDKROOT=(xcrun --sdk macosx --show-sdk-path)
+              #swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file
+              swift run -c release swiftformat "$SRCROOT/Sources/"

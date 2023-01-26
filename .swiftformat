@@ -1,0 +1,15 @@
+--exclude Pods
+--header strip
+--enable isEmpty
+--enable wrapConditionalBodies,initCoderUnavailable
+--disable wrapMultilineStatementBraces
+--disable preferKeyPath
+--maxwidth 80
+--commas inline
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--extensionacl on-declarations
+--funcattributes prev-line
+--typeattributes prev-line
+--varattributes prev-line
