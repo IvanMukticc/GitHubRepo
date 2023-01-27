@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State
-    private var query = ""
+    let apiCall = ApiManager()
+    let repositories = [Root]()
+
     var body: some View {
         NavigationView {
-            VStack {}
+            VStack {
+
+            }
         }
     }
 }
