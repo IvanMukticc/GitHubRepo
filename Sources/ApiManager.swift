@@ -1,19 +1,14 @@
 import Foundation
+import Kingfisher
 
-class ApiManager: ObservableObject {
-    var searchTerm = "laravel"
-
-//    init(searchTerm: String) {
-//        self.searchTerm = searchTerm
-//    }
-
+class ApiManager {
     enum ApiError: Error, LocalizedError {
         case invalidURL
         case dataNotFound
         case decodingError
     }
 
-    var endPointURL: String {
+    func getUrlRequest(searchTerm: String) -> URLRequest? {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.github.com"
@@ -22,7 +17,11 @@ class ApiManager: ObservableObject {
             URLQueryItem(name: "q", value: searchTerm)
         ]
 
-        return urlComponents.url?.absoluteString ?? "N/A"
+        guard let url = urlComponents.url else {
+            return nil
+        }
+
+        return URLRequest(url: url)
     }
 
     var decoder: JSONDecoder {
@@ -32,35 +31,20 @@ class ApiManager: ObservableObject {
         return decoder
     }
 
-    func sendRequest(completion: @escaping ([Repository]?, ApiError?) -> Void) {
-        guard let url = URL(string: endPointURL) else {
-            completion(nil, .invalidURL)
-            return
+    func getRepositories(for search: String) async throws -> [Repository] {
+        guard let urlRequest = getUrlRequest(searchTerm: search)
+        else {
+            return []
+        }
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        guard (response as? HTTPURLResponse)?.statusCode == 200
+        else {
+            throw ApiError.dataNotFound
         }
 
-        let request = URLRequest(url: url)
-
-        let task = URLSession.shared
-            .dataTask(with: request) { data, response, error in
-                guard
-                    let data = data,
-                    let response = response as? HTTPURLResponse,
-                    200 ..< 300 ~= response.statusCode,
-                    error == nil
-                else {
-                    completion(nil, .dataNotFound)
-                    return
-                }
-
-                do {
-                    let decodedData = try self.decoder
-                        .decode(Root.self, from: data)
-                    completion(decodedData.items, nil)
-                    print(decodedData.items?.count ?? 0)
-                } catch {
-                    completion(nil, .decodingError)
-                }
-            }
-        task.resume()
+        let decoded = try decoder.decode(Root.self, from: data)
+        print(decoded.items?.count ?? 0)
+        return decoded.items ?? []
     }
 }

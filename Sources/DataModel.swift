@@ -16,6 +16,20 @@ struct Repository: Codable, Identifiable {
     let updatedAt: Date?
     let language: String?
     let owner: Owner?
+
+    static let example = Repository(
+        id: 1,
+        name: "Laravel",
+        forks: 20,
+        openIssues: 1,
+        watchers: 18,
+        stargazersCount: 22,
+        description: "Coding in php",
+        createdAt: Date.now,
+        updatedAt: Date.now,
+        language: "PHP",
+        owner: Owner(id: 2, login: "Jhonny", avatarUrl: "O")
+    )
 }
 
 struct Owner: Codable {
