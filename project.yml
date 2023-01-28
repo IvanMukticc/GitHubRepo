@@ -4,10 +4,7 @@ options:
     deploymentTarget:
         iOS: 15.0
         
-packages:
-    KingfisherSwiftUI:
-        url: https://github.com/onevcat/Kingfisher.git
-        from: 7.5.0
+#packages:
 # add template attributes for code signing
 targets:
     GitHubRepo:
@@ -27,9 +24,7 @@ targetTemplates:
             - Resources
             - Config/${enviroment}
         scheme: {}
-        dependencies:
-            - package: KingfisherSwiftUI
-              product: Kingfisher
+        dependencies: []
         info:
             path: Config/${enviroment}/Info.plist
             properties:

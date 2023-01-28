@@ -1,5 +1,4 @@
 import Foundation
-import Kingfisher
 
 class ApiManager {
     enum ApiError: Error, LocalizedError {
@@ -34,7 +33,7 @@ class ApiManager {
     func getRepositories(for search: String) async throws -> [Repository] {
         guard let urlRequest = getUrlRequest(searchTerm: search)
         else {
-            return []
+            throw ApiError.invalidURL
         }
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
@@ -44,7 +43,6 @@ class ApiManager {
         }
 
         let decoded = try decoder.decode(Root.self, from: data)
-        print(decoded.items?.count ?? 0)
         return decoded.items ?? []
     }
 }

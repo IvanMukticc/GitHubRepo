@@ -5,15 +5,17 @@ struct ContentView: View {
     @State
     var repositories = [Repository]()
     @State
-    private var searchTerm: String = "php"
+    private var searchTerm: String = ""
+    @State
+    private var isError = false
+    @State
+    private var message = ""
 
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(repositories) { repository in
-                        Text(repository.name ?? "Pero")
-                    }
+            List {
+                ForEach(repositories) { repository in
+                    Text(repository.name ?? "N/A")
                 }
             }
             .task {
@@ -21,8 +23,13 @@ struct ContentView: View {
                     repositories = try await apiManager
                         .getRepositories(for: searchTerm)
                 } catch {
-                    print(error.localizedDescription)
+                    message =
+                        "Could no load data. \(error.localizedDescription): Data not found."
+                    isError = true
                 }
+            }
+            .alert(isPresented: $isError) {
+                Alert(title: Text("Error"), message: Text(message))
             }
         }
     }

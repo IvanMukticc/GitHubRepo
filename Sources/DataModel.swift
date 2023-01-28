@@ -17,7 +17,7 @@ struct Repository: Codable, Identifiable {
     let language: String?
     let owner: Owner?
 
-    static let example = Repository(
+    static let mock = Repository(
         id: 1,
         name: "Laravel",
         forks: 20,
