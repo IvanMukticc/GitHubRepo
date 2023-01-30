@@ -11,6 +11,7 @@ struct ContentView: View {
     @State
     private var message = ""
 
+
     var body: some View {
         NavigationView {
             List {
@@ -18,16 +19,21 @@ struct ContentView: View {
                     Text(repository.name ?? "N/A")
                 }
             }
-            .task {
-                do {
-                    repositories = try await apiManager
-                        .getRepositories(for: searchTerm)
-                } catch {
-                    message =
-                        "Could no load data. \(error.localizedDescription): Data not found."
-                    isError = true
+            .searchable(text: $searchTerm, prompt: "Please enter search term")
+            .onChange(of: searchTerm, perform: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    Task {
+                        do {
+                            repositories = try await apiManager
+                                .getRepositories(for: searchTerm)
+                        } catch {
+                            message =
+                                "Could not find any data on \(searchTerm). Please try something else."
+                            isError = true
+                        }
+                    }
                 }
-            }
+            })
             .alert(isPresented: $isError) {
                 Alert(title: Text("Error"), message: Text(message))
             }
