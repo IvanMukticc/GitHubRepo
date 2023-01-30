@@ -3,8 +3,19 @@ import Foundation
 class ApiManager {
     enum ApiError: Error, LocalizedError {
         case invalidURL
-        case dataNotFound(response: Int?)
+        case dataNotFound
         case badURLRequest
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidURL:
+                return "Invalid URL!"
+            case .dataNotFound:
+                return ""
+            case .badURLRequest:
+                return "Bad URLRequest!"
+            }
+        }
     }
 
     func getUrlRequest(searchTerm: String) throws -> URLRequest? {
@@ -37,10 +48,10 @@ class ApiManager {
         }
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
-        let statusCode = (response as? HTTPURLResponse)?.statusCode
-        guard statusCode == 200
+        guard (response as? HTTPURLResponse)?.statusCode == 200
         else {
-            throw ApiError.dataNotFound(response: statusCode)
+            print("An error occured with status: \(response)")
+            return []
         }
 
         let decoded = try decoder.decode(Root.self, from: data)
