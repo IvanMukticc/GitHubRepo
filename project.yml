@@ -4,7 +4,7 @@ options:
     deploymentTarget:
         iOS: 15.0
         
-#packages: []
+#packages:
 # add template attributes for code signing
 targets:
     GitHubRepo:
