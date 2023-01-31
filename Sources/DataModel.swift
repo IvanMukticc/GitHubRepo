@@ -21,10 +21,10 @@ struct Repository: Codable, Identifiable {
     static let mock = Repository(
         id: 1,
         name: "Laravel",
-        forks: 20,
+        forks: 20222,
         openIssues: 1,
         watchers: 18,
-        stargazersCount: 22,
+        stargazersCount: 22222,
         description: "Coding in php",
         createdAt: Date.now,
         updatedAt: Date.now,

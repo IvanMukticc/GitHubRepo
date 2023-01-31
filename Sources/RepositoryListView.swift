@@ -3,12 +3,17 @@ import SwiftUI
 struct RepositoryListView: View {
     @StateObject
     var viewModel: ViewModel
+    @State
+    var destination: Destination?
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewModel.repositories) { repository in
-                    Text(repository.name)
+                    RepositoryListRow(repository: repository) { destination in
+                        self.destination = destination
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .searchable(
@@ -25,6 +30,7 @@ struct RepositoryListView: View {
                     }
                 }
             }
+            .navigationTitle(Text("Repositories"))
             .onChange(of: viewModel.searchTerm, perform: { _ in
                 viewModel.shouldTriggerRequest = true
                 viewModel.timeRemaining = 1
@@ -34,6 +40,16 @@ struct RepositoryListView: View {
                     title: Text("Error"),
                     message: Text(viewModel.errorMessage)
                 )
+            }
+        }
+        .sheet(item: $destination, onDismiss: {
+            destination = nil
+        }) { destination in
+            switch destination {
+            case let .details(repository):
+                RepositoryDetailView(repository: repository)
+            case let .user(owner):
+                UserDetailView(owner: owner)
             }
         }
     }
