@@ -3,15 +3,13 @@ import SwiftUI
 struct RepositoryListView: View {
     @StateObject
     var viewModel: ViewModel
-    @State
-    var destination: Destination?
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewModel.repositories) { repository in
                     RepositoryListRow(repository: repository) { destination in
-                        self.destination = destination
+                        viewModel.destination = destination
                     }
                     .buttonStyle(.plain)
                 }
@@ -42,14 +40,17 @@ struct RepositoryListView: View {
                 )
             }
         }
-        .sheet(item: $destination, onDismiss: {
-            destination = nil
+        .sheet(item: $viewModel.destination, onDismiss: {
+            viewModel.destination = nil
         }) { destination in
             switch destination {
             case let .details(repository):
-                RepositoryDetailView(repository: repository)
+                RepositoryDetailView(
+                    viewModel: viewModel,
+                    repository: repository
+                )
             case let .user(owner):
-                UserDetailView(owner: owner)
+                UserDetailView(viewModel: viewModel, owner: owner)
             }
         }
     }

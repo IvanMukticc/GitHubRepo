@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct RepositoryDetailView: View {
+    @StateObject
+    var viewModel: RepositoryListView.ViewModel
     var repository: Repository
 
     var body: some View {
@@ -10,6 +12,9 @@ struct RepositoryDetailView: View {
 
 struct RepositoryDetailViewView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoryDetailView(repository: Repository.mock)
+        RepositoryDetailView(
+            viewModel: RepositoryListView.ViewModel(),
+            repository: Repository.mock
+        )
     }
 }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct UserDetailView: View {
+    @StateObject
+    var viewModel: RepositoryListView.ViewModel
     var owner: Owner
 
     var body: some View {
@@ -10,11 +12,9 @@ struct UserDetailView: View {
 
 struct UserDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        UserDetailView(owner: Owner(
-            id: 0,
-            login: "Kurac",
-            avatarUrl: "fsdfsdf",
-            url: "sdflkjfsd"
-        ))
+        UserDetailView(
+            viewModel: RepositoryListView.ViewModel(),
+            owner: Owner.mock
+        )
     }
 }

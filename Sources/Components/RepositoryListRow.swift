@@ -1,18 +1,5 @@
 import SwiftUI
 
-enum Destination: Identifiable {
-    var id: Int {
-        switch self {
-        case let .details(repository):
-            return repository.id
-        case let .user(owner):
-            return owner.id
-        }
-    }
-    
-    case details(repository: Repository), user(owner: Owner)
-}
-
 struct RepositoryListRow: View {
     @State
     var repository: Repository
@@ -45,29 +32,15 @@ struct RepositoryListRow: View {
                     }
                     Spacer()
                     VStack(alignment: .trailing) {
-                        HStack {
-                            Text("\(repository.stargazersCount)")
-                                .font(.system(size: 15))
-                            Image(systemName: "star.fill")
-                                .fixedSize()
-                                .frame(width: 20)
-                                .foregroundColor(.yellow)
-                        }
-                        HStack {
-                            Text("\(repository.watchers)")
-                                .font(.system(size: 15))
-                            Image(systemName: "eye.fill")
-                                .fixedSize()
-                                .frame(width: 20)
-                                .foregroundColor(.blue)
-                        }
-                        HStack {
-                            Text("\(repository.forks)")
-                                .font(.system(size: 15))
-                            Image(systemName: "tuningfork")
-                                .fixedSize()
-                                .frame(width: 20)
-                        }
+                        InfoIconView(type: .stars(
+                            stars: repository
+                                .stargazersCount
+                        ))
+                        InfoIconView(type: .watchers(
+                            watchers: repository
+                                .watchers
+                        ))
+                        InfoIconView(type: .forks(forks: repository.forks))
                     }
                 }
                 .contentShape(Rectangle())

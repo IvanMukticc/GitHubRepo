@@ -44,4 +44,11 @@ struct Owner: Codable {
     let login: String
     let avatarUrl: String
     let url: String
+
+    static let mock = Owner(
+        id: 0,
+        login: "John Doe",
+        avatarUrl: "O",
+        url: "https://api.github.com/users/octocat"
+    )
 }

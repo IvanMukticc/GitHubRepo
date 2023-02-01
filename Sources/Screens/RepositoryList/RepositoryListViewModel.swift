@@ -19,6 +19,8 @@ extension RepositoryListView {
             .autoconnect()
         @Published
         var shouldTriggerRequest = false
+        @Published
+        var destination: Destination?
 
         func fetchData() {
             Task {
