@@ -9,8 +9,18 @@ struct RepositoryDetailView: View {
         NavigationView {
             List {
                 Section {
-                    Text("\(viewModel.repository.name)")
-                        .textFontModifier(size: 20, weight: .bold)
+                    HStack {
+                        Text("\(viewModel.repository.name)")
+                            .textFontModifier(size: 20, weight: .bold)
+                        Spacer()
+                        Image(systemName: "greaterthan")
+                    }
+                    .contentShape(Rectangle())
+                }
+                .onTapGesture {
+                    if let url = URL(string: viewModel.repository.htmlUrl) {
+                        UIApplication.shared.open(url)
+                    }
                 }
                 Section("COUNTS") {
                     HStack(alignment: .firstTextBaseline) {

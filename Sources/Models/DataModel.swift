@@ -15,7 +15,7 @@ struct Repository: Codable, Identifiable {
     let createdAt: Date
     let updatedAt: Date?
     let language: String?
-    let url: String
+    let htmlUrl: String
     let owner: Owner
 
     static let mock = Repository(
@@ -29,7 +29,7 @@ struct Repository: Codable, Identifiable {
         createdAt: Date.now,
         updatedAt: Date.now,
         language: "PHP",
-        url: "",
+        htmlUrl: "",
         owner: Owner(
             id: 2,
             login: "Jhonny",
