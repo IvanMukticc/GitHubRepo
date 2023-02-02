@@ -2,19 +2,15 @@ import SwiftUI
 
 struct RepositoryDetailView: View {
     @StateObject
-    var viewModel: RepositoryListView.ViewModel
-    var repository: Repository
+    var viewModel: ViewModel
 
     var body: some View {
-        Text(repository.name)
+        Text("\(viewModel.repository.name)")
     }
 }
 
 struct RepositoryDetailViewView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoryDetailView(
-            viewModel: RepositoryListView.ViewModel(),
-            repository: Repository.mock
-        )
+        RepositoryDetailView(viewModel: .init(repository: Repository.mock))
     }
 }

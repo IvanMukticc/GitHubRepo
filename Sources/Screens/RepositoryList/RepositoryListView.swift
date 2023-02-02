@@ -45,12 +45,9 @@ struct RepositoryListView: View {
         }) { destination in
             switch destination {
             case let .details(repository):
-                RepositoryDetailView(
-                    viewModel: viewModel,
-                    repository: repository
-                )
+                RepositoryDetailView(viewModel: .init(repository: repository))
             case let .user(owner):
-                UserDetailView(viewModel: viewModel, owner: owner)
+                UserDetailView(viewModel: .init(owner: owner))
             }
         }
     }

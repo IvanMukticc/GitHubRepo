@@ -2,19 +2,15 @@ import SwiftUI
 
 struct UserDetailView: View {
     @StateObject
-    var viewModel: RepositoryListView.ViewModel
-    var owner: Owner
+    var viewModel: ViewModel
 
     var body: some View {
-        Text("User Detail view for user: \(owner.login)")
+        Text("User Detail view for user: \(viewModel.owner.login)")
     }
 }
 
 struct UserDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        UserDetailView(
-            viewModel: RepositoryListView.ViewModel(),
-            owner: Owner.mock
-        )
+        UserDetailView(viewModel: ViewModel(owner: Owner.mock))
     }
 }

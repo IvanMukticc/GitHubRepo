@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct RepositoryListRow: View {
-    @State
     var repository: Repository
     var actionHandler: ((Destination) -> Void)?
 
@@ -25,10 +24,10 @@ struct RepositoryListRow: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(repository.name)
-                            .font(.system(size: 20, weight: .bold))
-                            .multilineTextAlignment(.leading)
+                            .textFontModifier(size: 20, weight: .bold)
+
                         Text(repository.owner.login)
-                            .font(.system(size: 15, weight: .medium))
+                            .textFontModifier(size: 20, weight: .semibold)
                     }
                     Spacer()
                     VStack(alignment: .trailing) {

@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct InfoIconView: View {
-    let type: InfoIconType
+    @State
+    var type: InfoIconType
 
     var body: some View {
         HStack {
             Text(type.value)
-                .font(.system(size: 15))
+                .textFontModifier(size: 15)
             type.icon
                 .fixedSize()
                 .frame(width: 20)
