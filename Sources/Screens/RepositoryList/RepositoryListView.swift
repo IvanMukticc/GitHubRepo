@@ -41,11 +41,13 @@ struct RepositoryListView: View {
             }
         }
         .sheet(item: $viewModel.destination, onDismiss: {
-            viewModel.destination = nil
+//            viewModel.destination = nil
         }) { destination in
             switch destination {
             case let .details(repository):
-                RepositoryDetailView(viewModel: .init(repository: repository))
+                RepositoryDetailView(viewModel: .init(repository: repository)) { destination in
+                    viewModel.destination = destination
+                }
             case let .user(owner):
                 UserDetailView(viewModel: .init(owner: owner))
             }

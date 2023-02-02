@@ -34,7 +34,7 @@ struct Repository: Codable, Identifiable {
             id: 2,
             login: "Jhonny",
             avatarUrl: "O",
-            url: "https://api.github.com/users/octocat"
+            htmlUrl: "https://api.github.com/users/octocat"
         )
     )
 }
@@ -43,12 +43,12 @@ struct Owner: Codable {
     let id: Int
     let login: String
     let avatarUrl: String
-    let url: String
+    let htmlUrl: String
 
     static let mock = Owner(
         id: 0,
         login: "John Doe",
         avatarUrl: "O",
-        url: "https://api.github.com/users/octocat"
+        htmlUrl: "https://api.github.com/users/octocat"
     )
 }

@@ -27,7 +27,7 @@ struct RepositoryListRow: View {
                             .textFontModifier(size: 20, weight: .bold)
 
                         Text(repository.owner.login)
-                            .textFontModifier(size: 20, weight: .semibold)
+                            .textFontModifier(size: 15, weight: .semibold)
                     }
                     Spacer()
                     VStack(alignment: .trailing) {
