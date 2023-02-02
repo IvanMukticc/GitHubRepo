@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct CountsTextModifier: ViewModifier {
+struct CountsEmojiModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 22, height: 14)
@@ -11,7 +11,7 @@ struct CountsTextModifier: ViewModifier {
 }
 
 extension View {
-    func countsTextModifier() -> some View {
-        modifier(CountsTextModifier())
+    func countsEmojiModifier() -> some View {
+        modifier(CountsEmojiModifier())
     }
 }

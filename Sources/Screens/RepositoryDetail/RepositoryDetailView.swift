@@ -9,37 +9,39 @@ struct RepositoryDetailView: View {
         NavigationView {
             List {
                 Section {
-                    HStack {
-                        Text("\(viewModel.repository.name)")
-                            .textFontModifier(size: 20, weight: .bold)
-                        Spacer()
-                        Image(systemName: "greaterthan")
-                    }
-                    .contentShape(Rectangle())
-                }
-                .onTapGesture {
-                    if let url = URL(string: viewModel.repository.htmlUrl) {
-                        UIApplication.shared.open(url)
+                    Button {
+                        if let url = URL(string: viewModel.repository.htmlUrl) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack {
+                            Text("\(viewModel.repository.name)")
+                                .textFontModifier(size: 20, weight: .bold)
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "greaterthan")
+                        }
+                        .contentShape(Rectangle())
                     }
                 }
                 Section("COUNTS") {
                     HStack(alignment: .firstTextBaseline) {
                         Text("⭐️")
-                            .countsTextModifier()
+                            .countsEmojiModifier()
                         Text("stars".capitalized)
                         Spacer()
                         Text("\(viewModel.repository.stargazersCount)")
                     }
                     HStack {
                         Text("⫚")
-                            .countsTextModifier()
+                            .countsEmojiModifier()
                         Text("Forks")
                         Spacer()
                         Text("\(viewModel.repository.forks)")
                     }
                     HStack {
                         Text("👀")
-                            .countsTextModifier()
+                            .countsEmojiModifier()
                         Text("Watchers")
                         Spacer()
                         Text("\(viewModel.repository.watchers)")
@@ -55,52 +57,63 @@ struct RepositoryDetailView: View {
                 }
 
                 Section("DATES") {
-                    Text(
-                        "Created at: \(viewModel.repository.createdAt, style: .date)"
-                    )
-                    .font(.headline)
-                    Text(
-                        "Updated at: \(viewModel.repository.updatedAt ?? Date.now, style: .date)"
-                    )
-                    .font(.headline)
+                    HStack {
+                        Text(
+                            "Created at:"
+                        )
+                        .font(.headline)
+                        Spacer()
+                        Text("\(viewModel.repository.createdAt, style: .date)")
+                    }
+                    HStack {
+                        Text(
+                            "Updated at:"
+                        )
+                        .font(.headline)
+                        Spacer()
+                        Text(
+                            "\(viewModel.repository.updatedAt ?? Date.now, style: .date)"
+                        )
+                    }
                 }
 
                 Section("OWNER") {
-                    HStack {
-                        Text("\(viewModel.repository.owner.login)")
-                            .textFontModifier(size: 30, weight: .bold)
-                            .foregroundColor(.white)
-                    }
-                    .frame(minHeight: 100)
-                    .background {
-                        ZStack {
-                            AsyncImage(url: URL(
-                                string: viewModel.repository.owner
-                                    .avatarUrl
-                            )) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                            } placeholder: {
-                                Color.gray
-                            }
-                            .scaledToFill()
-                            .blur(radius: 10)
-                            Color(.black)
-                                .opacity(0.3)
+                    Button {
+                        guard let url = URL(
+                            string: viewModel.repository.owner
+                                .htmlUrl
+                        )
+                        else {
+                            return
                         }
-                        .frame(width: 700, height: 150)
+                        UIApplication.shared.open(url)
+                    } label: {
+                        HStack {
+                            Text("\(viewModel.repository.owner.login)")
+                                .textFontModifier(size: 30, weight: .bold)
+                                .foregroundColor(.white)
+                        }
+                        .frame(minHeight: 100)
+                        .background {
+                            ZStack {
+                                AsyncImage(url: URL(
+                                    string: viewModel.repository.owner
+                                        .avatarUrl
+                                )) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } placeholder: {
+                                    Color.gray
+                                }
+                                .scaledToFill()
+                                .blur(radius: 10)
+                                Color(.black)
+                                    .opacity(0.3)
+                            }
+                            .frame(width: 700, height: 150)
+                        }
                     }
-                }
-                .onTapGesture {
-                    guard let url = URL(
-                        string: viewModel.repository.owner
-                            .htmlUrl
-                    )
-                    else {
-                        return
-                    }
-                    UIApplication.shared.open(url)
                 }
             }
             .listStyle(.insetGrouped)

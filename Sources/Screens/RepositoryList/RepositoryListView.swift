@@ -40,9 +40,7 @@ struct RepositoryListView: View {
                 )
             }
         }
-        .sheet(item: $viewModel.destination, onDismiss: {
-//            viewModel.destination = nil
-        }) { destination in
+        .sheet(item: $viewModel.destination) { destination in
             switch destination {
             case let .details(repository):
                 RepositoryDetailView(viewModel: .init(repository: repository)) { destination in
