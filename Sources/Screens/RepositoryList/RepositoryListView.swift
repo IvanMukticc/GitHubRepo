@@ -8,7 +8,10 @@ struct RepositoryListView: View {
         NavigationView {
             List {
                 ForEach(viewModel.repositories) { repository in
-                    Text(repository.name)
+                    RepositoryListRow(repository: repository) { destination in
+                        viewModel.destination = destination
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .searchable(
@@ -25,6 +28,7 @@ struct RepositoryListView: View {
                     }
                 }
             }
+            .navigationTitle(Text("Repositories"))
             .onChange(of: viewModel.searchTerm, perform: { _ in
                 viewModel.shouldTriggerRequest = true
                 viewModel.timeRemaining = 1
@@ -34,6 +38,16 @@ struct RepositoryListView: View {
                     title: Text("Error"),
                     message: Text(viewModel.errorMessage)
                 )
+            }
+        }
+        .sheet(item: $viewModel.destination, onDismiss: {
+            viewModel.destination = nil
+        }) { destination in
+            switch destination {
+            case let .details(repository):
+                RepositoryDetailView(viewModel: .init(repository: repository))
+            case let .user(owner):
+                UserDetailView(viewModel: .init(owner: owner))
             }
         }
     }

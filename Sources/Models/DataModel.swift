@@ -21,10 +21,10 @@ struct Repository: Codable, Identifiable {
     static let mock = Repository(
         id: 1,
         name: "Laravel",
-        forks: 20,
+        forks: 20222,
         openIssues: 1,
         watchers: 18,
-        stargazersCount: 22,
+        stargazersCount: 22222,
         description: "Coding in php",
         createdAt: Date.now,
         updatedAt: Date.now,
@@ -44,4 +44,11 @@ struct Owner: Codable {
     let login: String
     let avatarUrl: String
     let url: String
+
+    static let mock = Owner(
+        id: 0,
+        login: "John Doe",
+        avatarUrl: "O",
+        url: "https://api.github.com/users/octocat"
+    )
 }
