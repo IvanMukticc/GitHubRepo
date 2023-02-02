@@ -24,29 +24,22 @@ struct RepositoryDetailView: View {
                         .contentShape(Rectangle())
                     }
                 }
+
                 Section("COUNTS") {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("⭐️")
-                            .countsEmojiModifier()
-                        Text("stars".capitalized)
-                        Spacer()
-                        Text("\(viewModel.repository.stargazersCount)")
-                    }
-                    HStack {
-                        Text("⫚")
-                            .countsEmojiModifier()
-                        Text("Forks")
-                        Spacer()
-                        Text("\(viewModel.repository.forks)")
-                    }
-                    HStack {
-                        Text("👀")
-                            .countsEmojiModifier()
-                        Text("Watchers")
-                        Spacer()
-                        Text("\(viewModel.repository.watchers)")
-                    }
+                    InfoEmojiView(type: .stars(
+                        stars: viewModel.repository
+                            .stargazersCount
+                    ))
+                    InfoEmojiView(type: .forks(
+                        forks: viewModel.repository
+                            .forks
+                    ))
+                    InfoEmojiView(type: .watchers(
+                        watchers: viewModel.repository
+                            .watchers
+                    ))
                 }
+
                 Section("DESCRIPTION") {
                     Text("Language: \(viewModel.repository.language ?? "n/a")")
                         .textFontModifier(size: 20, weight: .semibold)
@@ -79,14 +72,9 @@ struct RepositoryDetailView: View {
 
                 Section("OWNER") {
                     Button {
-                        guard let url = URL(
-                            string: viewModel.repository.owner
-                                .htmlUrl
-                        )
-                        else {
-                            return
+                        if let url = URL(string: viewModel.repository.htmlUrl) {
+                            UIApplication.shared.open(url)
                         }
-                        UIApplication.shared.open(url)
                     } label: {
                         HStack {
                             Text("\(viewModel.repository.owner.login)")
