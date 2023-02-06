@@ -3,11 +3,19 @@ import SwiftUI
 struct RepositoryListRow: View {
     var repository: Repository
     var actionHandler: ((Destination) -> Void)?
+    var apiManager = ApiManager()
 
     var body: some View {
         HStack {
             Button {
-                actionHandler?(.user(owner: repository.owner))
+                Task {
+                    let owner = try await ApiManager.fetch(
+                        type: Owner.self,
+                        with: ApiManager
+                            .getUrlRequest(url: repository.owner.url)
+                    )
+                    actionHandler?(.user(owner: owner))
+                }
             } label: {
                 AsyncImage(url: URL(string: repository.owner.avatarUrl))
                     .frame(width: 60, height: 60)
@@ -50,6 +58,8 @@ struct RepositoryListRow: View {
 
 struct RepositoryListRow_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoryListRow(repository: Repository.mock)
+        RepositoryListRow(
+            repository: Repository.mock
+        )
     }
 }

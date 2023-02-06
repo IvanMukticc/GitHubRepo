@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct InfoEmojiView: View {
-    var type: InfoEmojiType
+struct RepositoryEmojiView: View {
+    var type: ReposioryEmojiType
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -14,8 +14,8 @@ struct InfoEmojiView: View {
     }
 }
 
-struct InfoEmojiView_Previews: PreviewProvider {
+struct RepositoryEmojiView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoEmojiView(type: .forks(forks: 1))
+        RepositoryEmojiView(type: .forks(forks: 1))
     }
 }

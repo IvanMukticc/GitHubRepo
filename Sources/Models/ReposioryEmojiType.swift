@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-enum InfoEmojiType {
+enum ReposioryEmojiType {
     var value: String {
         switch self {
         case let .stars(stars):

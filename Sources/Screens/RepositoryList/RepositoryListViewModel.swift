@@ -4,7 +4,6 @@ import SwiftUI
 extension RepositoryListView {
     @MainActor
     class ViewModel: ObservableObject {
-        let apiManager = ApiManager()
         @Published
         var repositories = [Repository]()
         @Published
@@ -25,12 +24,16 @@ extension RepositoryListView {
         func fetchData() {
             Task {
                 do {
-                    repositories = try await apiManager
-                        .getRepositories(for: searchTerm)
+                    repositories = try await ApiManager.fetch(
+                        type: Root.self,
+                        with: ApiManager.getUrlRequest(searchTerm: searchTerm)
+                    ).items ?? []
                 } catch {
-                    errorAlertPresented = true
-                    errorMessage =
-                        "Could not find any data on \(searchTerm). Please try something else."
+                    if !repositories.isEmpty {
+                        errorAlertPresented = true
+                        errorMessage =
+                            "Could not find any data on \(searchTerm). Please try something else."
+                    }
                 }
             }
         }

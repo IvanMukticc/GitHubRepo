@@ -23,6 +23,7 @@ struct RepositoryListView: View {
                     viewModel.timeRemaining -= 1
                 } else {
                     if viewModel.shouldTriggerRequest {
+                        viewModel.repositories = []
                         viewModel.shouldTriggerRequest = false
                         viewModel.fetchData()
                     }

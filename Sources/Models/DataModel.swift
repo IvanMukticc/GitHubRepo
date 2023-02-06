@@ -34,7 +34,17 @@ struct Repository: Codable, Identifiable {
             id: 2,
             login: "Jhonny",
             avatarUrl: "O",
-            htmlUrl: "https://api.github.com/users/octocat"
+            htmlUrl: "https://api.github.com/users/octocat",
+            url: "https://api.github.com/users/dtrupenn",
+            name: "Jhonny",
+            createdAt: Date.now,
+            followers: 222,
+            following: 888,
+            publicRepos: 25,
+            email: "example@propeller.hr",
+            location: "Čakovec",
+            bio: "n/a",
+            reposUrl: "https://api.github.com/users/dtrupenn/repos"
         )
     )
 }
@@ -44,11 +54,30 @@ struct Owner: Codable {
     let login: String
     let avatarUrl: String
     let htmlUrl: String
-
+    let url: String
+    let name: String?
+    let createdAt: Date?
+    let followers: Int?
+    let following: Int?
+    let publicRepos: Int?
+    let email: String?
+    let location: String?
+    let bio: String?
+    let reposUrl: String?
     static let mock = Owner(
         id: 0,
         login: "John Doe",
         avatarUrl: "O",
-        htmlUrl: "https://api.github.com/users/octocat"
+        htmlUrl: "https://api.github.com/users/octocat",
+        url: "https://api.github.com/users/dtrupenn",
+        name: "Jhonny",
+        createdAt: Date.now,
+        followers: 222,
+        following: 888,
+        publicRepos: 25,
+        email: "example@propeller.hr",
+        location: "Čakovec",
+        bio: "n/a",
+        reposUrl: "https://api.github.com/users/dtrupenn/repos"
     )
 }
