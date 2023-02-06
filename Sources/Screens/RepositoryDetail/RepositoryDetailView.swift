@@ -19,7 +19,7 @@ struct RepositoryDetailView: View {
                                 .textFontModifier(size: 20, weight: .bold)
                                 .foregroundColor(.black)
                             Spacer()
-                            Image(systemName: "greaterthan")
+                            Image(systemName: "chevron.right")
                         }
                         .contentShape(Rectangle())
                     }

@@ -61,7 +61,7 @@ struct UserDetailView: View {
                                 Spacer()
                                 Text(repository.language ?? "n/a")
                                     .foregroundColor(.black)
-                                Image(systemName: "greaterthan")
+                                Image(systemName: "chevron.right")
                             }
                         }
                     }
@@ -72,11 +72,10 @@ struct UserDetailView: View {
                     viewModel.repositories = try await ApiManager
                         .shared.fetch(
                             type: [Repository].self,
-                            endpoint: ApiManager.Endpoint
-                                .userRepository(
-                                    userLogin: viewModel.owner
-                                        .login
-                                )
+                            endpoint: .userRepositories(
+                                user: viewModel.owner
+                                    .login
+                            )
                         )
                 }
             }

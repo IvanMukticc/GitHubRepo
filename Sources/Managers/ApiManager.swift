@@ -46,23 +46,17 @@ class ApiManager {
     }
 
     enum Endpoint {
-        case users(user: String)
+        case user(user: String)
         case searchRepositories(query: String)
-        case userRepository(userLogin: String)
+        case userRepositories(user: String)
 
         var request: URLRequest {
             var urlComponents = URLComponents()
             urlComponents.scheme = "https"
             urlComponents.host = "api.github.com"
-
-            switch self { case let .users(user: user):
-                urlComponents.path = "/users/\(user)"
-            case let .searchRepositories(query: query):
-                urlComponents.path = "/search/repositories"
-                urlComponents
-                    .queryItems = [URLQueryItem(name: "q", value: query)]
-            case let .userRepository(userLogin: userLogin):
-                urlComponents.path = "/users/\(userLogin)/repos"
+            urlComponents.path = path
+            if let queryItem = queryItem {
+                urlComponents.queryItems = [queryItem]
             }
 
             guard let url = urlComponents.url else {
@@ -71,6 +65,28 @@ class ApiManager {
                 )
             }
             return URLRequest(url: url)
+        }
+
+        var path: String {
+            switch self {
+            case let .user(user: user):
+                return "/users/\(user)"
+            case .searchRepositories:
+                return "/search/repositories"
+            case let .userRepositories(user: user):
+                return "/users/\(user)/repos"
+            }
+        }
+
+        var queryItem: URLQueryItem? {
+            switch self {
+            case .user:
+                return nil
+            case let .searchRepositories(query: query):
+                return URLQueryItem(name: "q", value: query)
+            case .userRepositories:
+                return nil
+            }
         }
     }
 }

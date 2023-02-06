@@ -4,24 +4,22 @@ struct RepositoryListRow: View {
     var repository: Repository
     var actionHandler: ((Destination) -> Void)?
     @State
-    private var showProgressView = false
+    private var isLoading = false
 
     var body: some View {
         HStack {
             Button {
                 Task {
-                    showProgressView = true
+                    isLoading = true
                     let owner = try await ApiManager.shared.fetch(
                         type: Owner.self,
-                        endpoint: ApiManager.Endpoint
-                            .users(user: repository.owner.login)
+                        endpoint: .user(user: repository.owner.login)
                     )
-                    showProgressView = false
+                    isLoading = false
                     actionHandler?(.user(owner: owner))
                 }
-                print("tapp")
             } label: {
-                if showProgressView {
+                if isLoading {
                     ProgressView()
                 } else {
                     AsyncImage(url: URL(string: repository.owner.avatarUrl))
@@ -35,7 +33,6 @@ struct RepositoryListRow: View {
             }
             Button {
                 actionHandler?(.details(repository: repository))
-                print("tapp")
             } label: {
                 HStack {
                     VStack(alignment: .leading) {

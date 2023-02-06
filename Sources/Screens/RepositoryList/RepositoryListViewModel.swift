@@ -26,8 +26,7 @@ extension RepositoryListView {
                 do {
                     repositories = try await ApiManager.shared.fetch(
                         type: Root.self,
-                        endpoint: ApiManager.Endpoint
-                            .searchRepositories(query: searchTerm)
+                        endpoint: .searchRepositories(query: searchTerm)
                     ).items ?? []
                 } catch {
                     if !repositories.isEmpty {
