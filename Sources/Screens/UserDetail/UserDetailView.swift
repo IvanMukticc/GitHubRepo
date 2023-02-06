@@ -69,12 +69,14 @@ struct UserDetailView: View {
             }
             .onAppear {
                 Task {
-                    let request = try ApiManager
-                        .getUrlRequest(user: viewModel.owner.login)
                     viewModel.repositories = try await ApiManager
-                        .fetch(
+                        .shared.fetch(
                             type: [Repository].self,
-                            with: request
+                            endpoint: ApiManager.Endpoint
+                                .userRepository(
+                                    userLogin: viewModel.owner
+                                        .login
+                                )
                         )
                 }
             }

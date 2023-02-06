@@ -24,9 +24,10 @@ extension RepositoryListView {
         func fetchData() {
             Task {
                 do {
-                    repositories = try await ApiManager.fetch(
+                    repositories = try await ApiManager.shared.fetch(
                         type: Root.self,
-                        with: ApiManager.getUrlRequest(searchTerm: searchTerm)
+                        endpoint: ApiManager.Endpoint
+                            .searchRepositories(query: searchTerm)
                     ).items ?? []
                 } catch {
                     if !repositories.isEmpty {

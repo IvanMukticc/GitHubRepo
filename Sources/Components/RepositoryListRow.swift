@@ -3,31 +3,39 @@ import SwiftUI
 struct RepositoryListRow: View {
     var repository: Repository
     var actionHandler: ((Destination) -> Void)?
-    var apiManager = ApiManager()
+    @State
+    private var showProgressView = false
 
     var body: some View {
         HStack {
             Button {
                 Task {
-                    let owner = try await ApiManager.fetch(
+                    showProgressView = true
+                    let owner = try await ApiManager.shared.fetch(
                         type: Owner.self,
-                        with: ApiManager
-                            .getUrlRequest(url: repository.owner.url)
+                        endpoint: ApiManager.Endpoint
+                            .users(user: repository.owner.login)
                     )
+                    showProgressView = false
                     actionHandler?(.user(owner: owner))
                 }
+                print("tapp")
             } label: {
-                AsyncImage(url: URL(string: repository.owner.avatarUrl))
-                    .frame(width: 60, height: 60)
-                    .clipShape(Circle())
-                    .overlay {
-                        Circle().stroke(.white, lineWidth: 2)
-                            .shadow(radius: 7)
-                    }
+                if showProgressView {
+                    ProgressView()
+                } else {
+                    AsyncImage(url: URL(string: repository.owner.avatarUrl))
+                        .frame(width: 60, height: 60)
+                        .clipShape(Circle())
+                        .overlay {
+                            Circle().stroke(.white, lineWidth: 2)
+                                .shadow(radius: 7)
+                        }
+                }
             }
-
             Button {
                 actionHandler?(.details(repository: repository))
+                print("tapp")
             } label: {
                 HStack {
                     VStack(alignment: .leading) {
