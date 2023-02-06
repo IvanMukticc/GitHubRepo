@@ -27,21 +27,18 @@ struct UserDetailView: View {
                 }
 
                 Section("PERSONAL") {
-                    VStack(alignment: .leading) {
-                        Text("Name")
-                            .textFontModifier(size: 18, weight: .semibold)
-                        Text("\(viewModel.owner.name ?? "n/a")")
-                    }
-                    VStack(alignment: .leading) {
-                        Text("Email")
-                            .textFontModifier(size: 18, weight: .semibold)
-                        Text("\(viewModel.owner.email ?? "n/a")")
-                    }
-                    VStack(alignment: .leading) {
-                        Text("Location")
-                            .textFontModifier(size: 18, weight: .semibold)
-                        Text("\(viewModel.owner.location ?? "n/a")")
-                    }
+                    PersonalDetailView(type: .name(
+                        name: viewModel.owner
+                            .name ?? "n/a"
+                    ))
+                    PersonalDetailView(type: .email(
+                        email: viewModel.owner
+                            .email ?? "n/a"
+                    ))
+                    PersonalDetailView(type: .location(
+                        location: viewModel.owner
+                            .location ?? "n/a"
+                    ))
                 }
 
                 Section("BIO") {
