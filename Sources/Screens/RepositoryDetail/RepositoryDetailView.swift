@@ -1,11 +1,112 @@
 import SwiftUI
 
 struct RepositoryDetailView: View {
-    @StateObject
+    @ObservedObject
     var viewModel: ViewModel
+    var actionHandler: ((Destination) -> Void)?
 
     var body: some View {
-        Text("\(viewModel.repository.name)")
+        NavigationView {
+            List {
+                Section {
+                    Button {
+                        if let url = URL(string: viewModel.repository.htmlUrl) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack {
+                            Text("\(viewModel.repository.name)")
+                                .textFontModifier(size: 20, weight: .bold)
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "greaterthan")
+                        }
+                        .contentShape(Rectangle())
+                    }
+                }
+
+                Section("COUNTS") {
+                    InfoEmojiView(type: .stars(
+                        stars: viewModel.repository
+                            .stargazersCount
+                    ))
+                    InfoEmojiView(type: .forks(
+                        forks: viewModel.repository
+                            .forks
+                    ))
+                    InfoEmojiView(type: .watchers(
+                        watchers: viewModel.repository
+                            .watchers
+                    ))
+                }
+
+                Section("DESCRIPTION") {
+                    Text("Language: \(viewModel.repository.language ?? "n/a")")
+                        .textFontModifier(size: 20, weight: .semibold)
+                    Text(
+                        "Details: \(viewModel.repository.description ?? "n/a")"
+                    )
+                    .font(.title2)
+                }
+
+                Section("DATES") {
+                    HStack {
+                        Text(
+                            "Created at:"
+                        )
+                        .font(.headline)
+                        Spacer()
+                        Text("\(viewModel.repository.createdAt, style: .date)")
+                    }
+                    HStack {
+                        Text(
+                            "Updated at:"
+                        )
+                        .font(.headline)
+                        Spacer()
+                        Text(
+                            "\(viewModel.repository.updatedAt ?? Date.now, style: .date)"
+                        )
+                    }
+                }
+
+                Section("OWNER") {
+                    Button {
+                        if let url = URL(string: viewModel.repository.htmlUrl) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack {
+                            Text("\(viewModel.repository.owner.login)")
+                                .textFontModifier(size: 30, weight: .bold)
+                                .foregroundColor(.white)
+                        }
+                        .frame(minHeight: 100)
+                        .background {
+                            ZStack {
+                                AsyncImage(url: URL(
+                                    string: viewModel.repository.owner
+                                        .avatarUrl
+                                )) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } placeholder: {
+                                    Color.gray
+                                }
+                                .scaledToFill()
+                                .blur(radius: 10)
+                                Color(.black)
+                                    .opacity(0.3)
+                            }
+                            .frame(width: 700, height: 150)
+                        }
+                    }
+                }
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Repository")
+        }
     }
 }
 
