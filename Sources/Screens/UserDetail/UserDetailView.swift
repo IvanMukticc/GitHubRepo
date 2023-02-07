@@ -9,6 +9,7 @@ struct UserDetailView: View {
             List {
                 Section {
                     Text("\(viewModel.owner.login)")
+                        .textFontModifier(size: 20, weight: .bold)
                 }
 
                 Section("COUNTS") {

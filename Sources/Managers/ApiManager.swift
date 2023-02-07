@@ -38,7 +38,7 @@ class ApiManager {
             throw ApiError.badURLRequest
         }
         do {
-            return try ApiManager.shared.decoder.decode(type, from: data)
+            return try decoder.decode(type, from: data)
         } catch {
             print(error)
             throw ApiError.dataNotFound(description: error.localizedDescription)
