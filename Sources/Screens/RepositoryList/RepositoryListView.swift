@@ -7,6 +7,8 @@ struct RepositoryListView: View {
     var body: some View {
         NavigationView {
             List {
+                SortView(viewModel: viewModel)
+
                 ForEach(viewModel.repositories) { repository in
                     RepositoryListRow(repository: repository) { destination in
                         viewModel.destination = destination
