@@ -1,11 +1,15 @@
 import Foundation
 import SwiftUI
 
-class ViewModel: ObservableObject {
-    @Published
-    var owner: Owner
+extension UserDetailView {
+    class ViewModel: ObservableObject {
+        @Published
+        var owner: Owner
+        @Published
+        var repositories: [Repository] = []
 
-    init(owner: Owner) {
-        self.owner = owner
+        init(owner: Owner) {
+            self.owner = owner
+        }
     }
 }

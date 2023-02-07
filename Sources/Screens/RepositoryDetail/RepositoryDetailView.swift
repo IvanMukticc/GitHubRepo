@@ -19,22 +19,22 @@ struct RepositoryDetailView: View {
                                 .textFontModifier(size: 20, weight: .bold)
                                 .foregroundColor(.black)
                             Spacer()
-                            Image(systemName: "greaterthan")
+                            Image(systemName: "chevron.right")
                         }
                         .contentShape(Rectangle())
                     }
                 }
 
                 Section("COUNTS") {
-                    InfoEmojiView(type: .stars(
+                    RepositoryEmojiView(type: .stars(
                         stars: viewModel.repository
                             .stargazersCount
                     ))
-                    InfoEmojiView(type: .forks(
+                    RepositoryEmojiView(type: .forks(
                         forks: viewModel.repository
                             .forks
                     ))
-                    InfoEmojiView(type: .watchers(
+                    RepositoryEmojiView(type: .watchers(
                         watchers: viewModel.repository
                             .watchers
                     ))
@@ -42,7 +42,7 @@ struct RepositoryDetailView: View {
 
                 Section("DESCRIPTION") {
                     Text("Language: \(viewModel.repository.language ?? "n/a")")
-                        .textFontModifier(size: 20, weight: .semibold)
+                        .font(.title2)
                     Text(
                         "Details: \(viewModel.repository.description ?? "n/a")"
                     )
@@ -72,7 +72,10 @@ struct RepositoryDetailView: View {
 
                 Section("OWNER") {
                     Button {
-                        if let url = URL(string: viewModel.repository.htmlUrl) {
+                        if let url = URL(
+                            string: viewModel.repository.owner
+                                .htmlUrl
+                        ) {
                             UIApplication.shared.open(url)
                         }
                     } label: {
