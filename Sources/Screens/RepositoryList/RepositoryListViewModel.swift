@@ -37,5 +37,34 @@ extension RepositoryListView {
                 }
             }
         }
+
+        func sortList(by sortType: SortBy) {
+            switch sortType {
+            case .starsAsc:
+                repositories.sort {
+                    $0.stargazersCount > $1.stargazersCount
+                }
+            case .starsDes:
+                repositories.sort {
+                    $0.stargazersCount < $1.stargazersCount
+                }
+            case .forksAsc:
+                repositories.sort {
+                    $0.forks > $1.forks
+                }
+            case .forksDes:
+                repositories.sort {
+                    $0.forks < $1.forks
+                }
+            case .updatedAsc:
+                repositories.sort {
+                    $0.updatedAt ?? Date.now > $1.updatedAt ?? Date.now
+                }
+            case .updatedDes:
+                repositories.sort {
+                    $0.updatedAt ?? Date.now < $1.updatedAt ?? Date.now
+                }
+            }
+        }
     }
 }
