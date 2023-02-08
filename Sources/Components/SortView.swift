@@ -17,8 +17,7 @@ struct SortView: View {
             Spacer()
 
             Button {
-                starSort == .starsAsc ? (starSort = .starsDes) :
-                    (starSort = .starsAsc)
+                starSort = starSort == .starsAsc ? .starsDes : .starsAsc
                 actionHandler?(starSort)
             } label: {
                 Image(systemName: "star.fill")
@@ -32,8 +31,7 @@ struct SortView: View {
             Spacer()
 
             Button {
-                forkSort == .forksAsc ? (forkSort = .forksDes) :
-                    (forkSort = .forksAsc)
+                forkSort = forkSort == .forksAsc ? .forksDes : .forksAsc
                 actionHandler?(forkSort)
             } label: {
                 Image(systemName: "tuningfork")
@@ -46,8 +44,8 @@ struct SortView: View {
             Spacer()
 
             Button {
-                updateSort == .updatedAsc ? (updateSort = .updatedDes) :
-                    (updateSort = .updatedAsc)
+                updateSort = updateSort == .updatedAsc ? .updatedDes :
+                    .updatedAsc
                 actionHandler?(updateSort)
             } label: {
                 Image(systemName: "tray.and.arrow.up.fill")
