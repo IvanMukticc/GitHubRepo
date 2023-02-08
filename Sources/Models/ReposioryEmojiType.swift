@@ -27,11 +27,11 @@ enum ReposioryEmojiType {
     var name: String {
         switch self {
         case .stars:
-            return String(localized: "Stars")
+            return "Stars".localized
         case .forks:
-            return String(localized: "Forks")
+            return "Forks".localized
         case .watchers:
-            return String(localized: "Watchers")
+            return "Watchers".localized
         }
     }
 

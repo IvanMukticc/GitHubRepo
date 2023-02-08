@@ -16,11 +16,11 @@ enum Personal {
     var text: String {
         switch self {
         case .name:
-            return String(localized: "Name")
+            return "Name".localized
         case .email:
-            return String(localized: "Email")
+            return "Email".localized
         case .location:
-            return String(localized: "Location")
+            return "Location".localized
         }
     }
 

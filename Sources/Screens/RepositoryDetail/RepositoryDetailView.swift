@@ -111,7 +111,7 @@ struct RepositoryDetailView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Repository")
+            .navigationTitle("Repositories".localized)
         }
     }
 }
