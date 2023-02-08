@@ -27,11 +27,11 @@ enum DetailEmojiType {
     var text: String {
         switch self {
         case .followers:
-            return "followers"
+            return String(localized: "Followers")
         case .following:
-            return "following"
+            return String(localized: "Following")
         case .publicRepos:
-            return "publicRepos"
+            return String(localized: "Public repos")
         }
     }
 

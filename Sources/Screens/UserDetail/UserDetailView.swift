@@ -12,7 +12,7 @@ struct UserDetailView: View {
                         .textFontModifier(size: 20, weight: .bold)
                 }
 
-                Section("COUNTS") {
+                Section("STATS") {
                     DetailEmojiView(type: .followers(
                         followers: viewModel.owner
                             .followers ?? 0
