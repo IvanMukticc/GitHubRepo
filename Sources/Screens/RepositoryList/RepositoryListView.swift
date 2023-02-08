@@ -7,7 +7,11 @@ struct RepositoryListView: View {
     var body: some View {
         NavigationView {
             List {
-                SortView(viewModel: viewModel)
+                if !viewModel.repositories.isEmpty {
+                    SortView { sortBy in
+                        viewModel.sortList(by: sortBy)
+                    }
+                }
 
                 ForEach(viewModel.repositories) { repository in
                     RepositoryListRow(repository: repository) { destination in

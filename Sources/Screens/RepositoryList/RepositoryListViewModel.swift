@@ -20,12 +20,6 @@ extension RepositoryListView {
         var shouldTriggerRequest = false
         @Published
         var destination: Destination?
-        @Published
-        var starSort = SortBy.starsAsc
-        @Published
-        var forkSort = SortBy.forksAsc
-        @Published
-        var updateSort = SortBy.updatedAsc
 
         func fetchData() {
             Task {
@@ -42,15 +36,6 @@ extension RepositoryListView {
                     }
                 }
             }
-        }
-
-        enum SortBy {
-            case starsAsc
-            case starsDes
-            case forksAsc
-            case forksDes
-            case updatedAsc
-            case updatedDes
         }
 
         func sortList(by sortType: SortBy) {
