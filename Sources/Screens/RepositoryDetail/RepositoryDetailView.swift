@@ -25,7 +25,7 @@ struct RepositoryDetailView: View {
                     }
                 }
 
-                Section("COUNTS") {
+                Section("STATS") {
                     RepositoryEmojiView(type: .stars(
                         stars: viewModel.repository
                             .stargazersCount
@@ -41,28 +41,31 @@ struct RepositoryDetailView: View {
                 }
 
                 Section("DESCRIPTION") {
-                    Text("Language: \(viewModel.repository.language ?? "n/a")")
-                        .font(.title2)
-                    Text(
-                        "Details: \(viewModel.repository.description ?? "n/a")"
-                    )
-                    .font(.title2)
+                    HStack {
+                        Text("Language:")
+                            .font(.headline)
+                        Spacer()
+                        Text(viewModel.repository.language ?? "n/a")
+                    }
+                    VStack(alignment: .leading) {
+                        Text(
+                            "Details:"
+                        )
+                        .font(.headline)
+                        Text(viewModel.repository.description ?? "n/a")
+                    }
                 }
 
                 Section("DATES") {
                     HStack {
-                        Text(
-                            "Created at:"
-                        )
-                        .font(.headline)
+                        Text("Created at:")
+                            .font(.headline)
                         Spacer()
                         Text("\(viewModel.repository.createdAt, style: .date)")
                     }
                     HStack {
-                        Text(
-                            "Updated at:"
-                        )
-                        .font(.headline)
+                        Text("Updated at:")
+                            .font(.headline)
                         Spacer()
                         Text(
                             "\(viewModel.repository.updatedAt ?? Date.now, style: .date)"
@@ -108,7 +111,7 @@ struct RepositoryDetailView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Repository")
+            .navigationTitle("Repositories".localized)
         }
     }
 }
